@@ -11,4 +11,8 @@ class Subject extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable = ['subject_name'];
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 }
