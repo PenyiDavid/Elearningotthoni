@@ -13,6 +13,9 @@ Route::get('/', function () {
 Route::get('/newsubject', [SubjectController::class, 'index'])->name('subject.index');
 Route::post('/newsubject', [SubjectController::class, 'store'])->name('subject.store');
 
+Route::get('/newquestion', [QuestionController::class, 'index'])->name('question.index');
+Route::post('/newquestion', [QuestionController::class, 'store'])->name('question.store');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
