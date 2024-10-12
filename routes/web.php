@@ -1,11 +1,17 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\SubjectController;
+use App\Models\Subject;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/newsubject', [SubjectController::class, 'index'])->name('subject.index');
+Route::post('/newsubject', [SubjectController::class, 'store'])->name('subject.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
