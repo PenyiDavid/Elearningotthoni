@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('score');
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
     }
 

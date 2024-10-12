@@ -18,6 +18,8 @@ return new class extends Migration
             $table->boolean('is_correct')->default(false);
             $table->timestamps();
             $table->softDeletes();
+            //nem kötelező
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 

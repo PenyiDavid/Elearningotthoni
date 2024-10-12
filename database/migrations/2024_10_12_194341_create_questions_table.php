@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('subject_id');
             $table->timestamps();
             $table->softDeletes();
+            //nem kötelező, de ajánlott
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
     }
 
