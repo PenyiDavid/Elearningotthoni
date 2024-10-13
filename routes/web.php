@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TestController;
 use App\Models\Subject;
@@ -24,6 +25,8 @@ Route::delete('/questions/{question}', [QuestionController::class, 'destroy'])->
 
 Route::get('/tests', [TestController::class, 'index'])->name('test.index');
 Route::get('tests/{test}', [TestController::class, 'show'])->name('test.show');
+
+Route::post('/tests/{test}', [ScoreController::class, 'store'])->name('score.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

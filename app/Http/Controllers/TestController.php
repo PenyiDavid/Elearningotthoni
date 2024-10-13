@@ -12,5 +12,13 @@ class TestController extends Controller
         $subjects = Subject::all();
         return view('tests.index', compact('subjects'));
     }
+
+    public function show($subject_name)
+    {
+        $subject = Subject::where('subject_name', $subject_name)->first();
+        
+        $questions = $subject->questions;
+        return view('tests.show', compact('subject', 'questions'));
+    }
     
 }
