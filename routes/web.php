@@ -13,8 +13,14 @@ Route::get('/', function () {
 Route::get('/newsubject', [SubjectController::class, 'index'])->name('subject.index');
 Route::post('/newsubject', [SubjectController::class, 'store'])->name('subject.store');
 
-Route::get('/newquestion', [QuestionController::class, 'index'])->name('question.index');
+Route::get('/newquestion', [QuestionController::class, 'create'])->name('question.create');
 Route::post('/newquestion', [QuestionController::class, 'store'])->name('question.store');
+
+Route::get('/questions', [QuestionController::class, 'index'])->name('question.index');
+Route::get('/questions/{question}', [QuestionController::class, 'show'])->name('question.show');
+Route::put('/questions/{question}', [QuestionController::class, 'update'])->name('question.update');
+Route::delete('/questions/{question}', [QuestionController::class, 'destroy'])->name('question.destroy');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

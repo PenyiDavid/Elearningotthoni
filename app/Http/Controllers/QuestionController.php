@@ -11,6 +11,11 @@ class QuestionController extends Controller
 {
     public function index()
     {
+        $questions = Question::all();
+        return view('questions.index', compact('questions'));
+    }
+    public function create()
+    {
         $subjects = Subject::all();
         return view('questions.create', compact('subjects'));
     }
@@ -42,5 +47,19 @@ class QuestionController extends Controller
         }
     
         return redirect()->back()->with('success', 'New question successfully added.'); // Visszajelzés
+    }
+    public function show(Question $question)
+    {
+        return view('questions.edit', compact('question'));
+    }
+    public function update(Request $request, Question $question)
+    {
+      
+    
+    }
+    public function destroy(Question $question)
+    {
+        $question->delete();
+        return redirect()->route('question.index')->with('success', 'Question successfully deleted.');
     }
 }
