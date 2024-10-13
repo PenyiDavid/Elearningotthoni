@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    h1>Questions List</h1>
+    <h1>Questions List</h1>
 
     @if($errors->any())
         <ul>

@@ -50,15 +50,37 @@ class QuestionController extends Controller
     }
     public function show(Question $question)
     {
-        return view('questions.edit', compact('question'));
+        $subjects = Subject::all();
+        return view('questions.edit', compact('question', 'subjects'));
     }
-    public function update(Request $request, Question $question)
+    public function update(Request $request, $id)
     {
-      
-    
+        $request->validate([
+            'question_text' => 'required|string|max:255',
+            'subject_id' => 'required|exists:subjects,id',
+            'answers' => 'required|array|min:2',
+            'answers.*.id' => 'required|exists:answers,id',
+            'answers.*.answer_text' => 'required|string|max:255',
+        ]);
+
+        $question = Question::findOrFail($id);
+        $question->update($request->only('question_text', 'subject_id', 'score')); // Kérdés frissítése
+
+        // Válaszok frissítése
+        foreach ($request->input('answers') as $answerData) {
+            $answer = Answer::findOrFail($answerData['id']);
+            $answer->update([
+                'answer_text' => $answerData['answer_text'],
+                'is_correct' => isset($answerData['is_correct']) ? $answerData['is_correct'] : 0,
+            ]);
+        }
+
+        return redirect()->route('question.index')->with('success', 'Question successfully updated.'); // Visszajelzés
     }
-    public function destroy(Question $question)
+    public function destroy($id)
     {
+        $question = Question::findOrFail($id); 
+        $question->answers()->delete(); // A válaszok törlése
         $question->delete();
         return redirect()->route('question.index')->with('success', 'Question successfully deleted.');
     }
