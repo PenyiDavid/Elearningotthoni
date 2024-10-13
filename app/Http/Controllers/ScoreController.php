@@ -36,15 +36,19 @@ class ScoreController extends Controller
 
         // 3. Ellenőrizni, hogy a felhasználó jó válaszokat adott-e meg.
         foreach ($questions as $question) {
-        $userAnswerId = $answersGiven[$question->id] ?? null;
+            $userAnswerIds = $answersGiven[$question->id] ?? []; // Tömbként várjuk a válaszokat
 
-        if ($userAnswerId) {
-        $correctAnswer = Answer::where('question_id', $question->id)
-                    ->where('is_correct', true)
-                    ->first();
+            if (is_array($userAnswerIds) && !empty($userAnswerIds)) {
+                // Lekérjük az összes helyes választ az adott kérdéshez
+                $correctAnswers = Answer::where('question_id', $question->id)
+                                        ->where('is_correct', true)
+                                        ->pluck('id'); // Csak az id-k kellenek
 
-        if ($correctAnswer && $correctAnswer->id == $userAnswerId) {
-        $score++;
+                // Minden felhasználói választ összehasonlítunk a helyes válaszokkal
+                foreach ($userAnswerIds as $userAnswerId) {
+                    if ($correctAnswers->contains($userAnswerId)) {
+                        $score++; // Ha a felhasználó válasza benne van a helyes válaszokban, növeljük a pontszámot
+                    }
                 }
             }
         }

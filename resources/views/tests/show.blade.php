@@ -18,6 +18,10 @@
     @if(@session('success'))
         <p>{{session('success')}}</p>
     @endif
+    @if (@session('error'))
+        <p>{{session('error')}}</p>
+        
+    @endif
 
     <form action="{{ route('score.store', $subject->subject_name) }}" method="post">
         @csrf
@@ -31,7 +35,7 @@
                     <ul>
                         @foreach ($question->answers as $answer)
                             <li>
-                                <input type="checkbox" name="answers[{{$question->id}}]" value="{{$answer->id}}" id="answer{{$answer->id}}">
+                                <input type="checkbox" name="answers[{{$question->id}}][]" value="{{$answer->id}}" id="answer{{$answer->id}}">
                                 <label for="answer{{$answer->id}}">{{$answer->answer_text}}</label>
                             </li>
                         @endforeach
