@@ -64,7 +64,7 @@ class QuestionController extends Controller
         ]);
 
         $question = Question::findOrFail($id);
-        $question->update($request->only('question_text', 'subject_id', 'score')); // Kérdés frissítése
+        $question->update($request->only('question_text', 'subject_id')); // Kérdés frissítése
 
         // Válaszok frissítése
         foreach ($request->input('answers') as $answerData) {
