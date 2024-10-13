@@ -25,8 +25,8 @@ Route::delete('/questions/{question}', [QuestionController::class, 'destroy'])->
 
 Route::get('/tests', [TestController::class, 'index'])->name('test.index');
 Route::get('tests/{test}', [TestController::class, 'show'])->name('test.show');
-
 Route::post('/tests/{test}', [ScoreController::class, 'store'])->name('score.store');
+Route::get('/score/{score}', [ScoreController::class, 'show'])->name('score.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

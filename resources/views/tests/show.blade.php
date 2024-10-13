@@ -21,10 +21,13 @@
 
     <form action="{{ route('score.store', $subject->subject_name) }}" method="post">
         @csrf
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email">
         <ul>
             @foreach ($questions as $question)
                 <li>
                     <p>{{$question->question_text}}</p>
+                    <input type="hidden" name="question_id" value="{{$question->id}}">
                     <ul>
                         @foreach ($question->answers as $answer)
                             <li>
@@ -37,5 +40,6 @@
             @endforeach
         </ul>
         <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
