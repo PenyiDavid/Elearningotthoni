@@ -28,7 +28,7 @@ class ScoreController extends Controller
         $questions = $subject->questions;
         $answersGiven = $request->input('answers');
 
-        if (count($answersGiven) != $questions->count()) {
+        if (!is_array($answersGiven) || count($answersGiven) != $questions->count()) {
         return redirect()->back()->with('error', 'Nem minden kérdésre válaszoltál.');
         }
 
