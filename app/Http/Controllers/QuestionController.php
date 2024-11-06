@@ -9,10 +9,18 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    public function index()
-    {
-        $questions = Question::all();
-        return view('questions.index', compact('questions'));
+    public function index(Request $request)
+    {   $query = Question::query();
+        if($request->has('subject_name') && !empty($request->subject_name)){
+            $subject = Subject::where('subject_name','=', $request->subject_name)->first();
+            if ($subject) {
+                $query->where('subject_id', '=',$subject->id);
+            }
+        }
+
+        $questions = $query->get();
+        $subjects = Subject::all();
+        return view('questions.index', ['subjects'=>$subjects, 'questions'=>$questions], );
     }
     public function create()
     {
